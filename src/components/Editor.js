@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 const CustomEditor = () => {
@@ -20,18 +20,26 @@ const CustomEditor = () => {
                 uploadUrl: process.env.REACT_APP_EDITOR_UPLOAD_URL,
             },
         },
+        revisionHistory: {
+            editorContainer: document.querySelector('#editor-container'),
+            viewerContainer: document.querySelector('#revision-viewer-container'),
+            viewerEditorElement: document.querySelector('#revision-viewer-editor'),
+            viewerSidebarContainer: document.querySelector('#revision-viewer-sidebar'),
+          },
+          
         licenseKey: process.env.REACT_APP_EDITOR_LICENSE,
     };
+    console.log("🚀 ~ file: Editor.js:25 ~ CustomEditor ~ editorConfiguration:", editorConfiguration)
 
     return (
         <div className="container">
             <h2>React CKEditor</h2>
             <CKEditor
-                editor={Editor}
+                editor={ClassicEditor}
                 config={editorConfiguration}
                 data="<p>Hello from CKEditor&nbsp;5!</p>"
                 onReady={
-                    Editor
+                    ClassicEditor
                         .create(document.querySelector('#editor'))
                         .then(editor => {
                             console.log('Editor was initialized', editor);
