@@ -29,7 +29,6 @@ const CustomEditor = () => {
           
         licenseKey: process.env.REACT_APP_EDITOR_LICENSE,
     };
-    console.log("🚀 ~ file: Editor.js:25 ~ CustomEditor ~ editorConfiguration:", editorConfiguration)
 
     return (
         <div className="container">
@@ -40,11 +39,14 @@ const CustomEditor = () => {
                 data="<p>Hello from CKEditor&nbsp;5!</p>"
                 onReady={editor => {
                     console.log('Editor is ready to use!', editor);
-                    editor.ui.getEditableElement().parentElement.insertBefore(
-                        editor.ui.view.toolbar.element,
-                        editor.ui.getEditableElement()
-                    );
-
+                    
+                    const editableElement = editor.ui.getEditableElement();
+                    const parentElement = editableElement && editableElement.parentElement;
+                
+                    if (parentElement) {
+                        parentElement.insertBefore(editor.ui.view.toolbar.element, editableElement);
+                    }
+                
                     setOurEditor(editor);
                 }}
                 onError={(error, { willEditorRestart }) => {
