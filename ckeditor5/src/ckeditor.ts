@@ -1,57 +1,51 @@
 /**
- * @license Copyright (c) 2014-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2014-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
 
 import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
+import { Autosave } from '@ckeditor/ckeditor5-autosave';
 import { Bold, Italic } from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
+import { CKBox } from '@ckeditor/ckeditor5-ckbox';
 import { CloudServices } from '@ckeditor/ckeditor5-cloud-services';
 import { Comments } from '@ckeditor/ckeditor5-comments';
-import { Plugin, type EditorConfig } from '@ckeditor/ckeditor5-core';
+import type { EditorConfig } from '@ckeditor/ckeditor5-core';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
 import { ExportPdf } from '@ckeditor/ckeditor5-export-pdf';
 import { ExportWord } from '@ckeditor/ckeditor5-export-word';
 import { Heading } from '@ckeditor/ckeditor5-heading';
-import { HtmlEmbed } from '@ckeditor/ckeditor5-html-embed';
 import {
 	Image,
 	ImageCaption,
 	ImageStyle,
 	ImageToolbar,
-	ImageUpload
+	ImageUpload,
+	PictureEditing
 } from '@ckeditor/ckeditor5-image';
 import { ImportWord } from '@ckeditor/ckeditor5-import-word';
 import { Indent } from '@ckeditor/ckeditor5-indent';
 import { Link } from '@ckeditor/ckeditor5-link';
 import { DocumentList } from '@ckeditor/ckeditor5-list';
 import { MediaEmbed } from '@ckeditor/ckeditor5-media-embed';
+import { PageBreak } from '@ckeditor/ckeditor5-page-break';
+import { Pagination } from '@ckeditor/ckeditor5-pagination';
 import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
+import { PasteFromOffice } from '@ckeditor/ckeditor5-paste-from-office';
+import {
+	RealTimeCollaborativeComments,
+	RealTimeCollaborativeEditing,
+	RealTimeCollaborativeRevisionHistory,
+	RealTimeCollaborativeTrackChanges
+} from '@ckeditor/ckeditor5-real-time-collaboration';
+import { RestrictedEditingMode } from '@ckeditor/ckeditor5-restricted-editing';
 import { RevisionHistory } from '@ckeditor/ckeditor5-revision-history';
-import type { RevisionData } from '@ckeditor/ckeditor5-revision-history/src/revision';
 import { Table, TableToolbar } from '@ckeditor/ckeditor5-table';
-
-export class RevisionHistoryAdapter extends Plugin {
-	public static get requires(): Array<string> {
-		return [ 'RevisionHistory' ];
-	}
-
-	public init(): void {
-		const revisionHistory = this.editor.plugins.get( 'RevisionHistory' ) as RevisionHistory;
-		const revisions: Array<RevisionData> = [];
-
-		revisionHistory.adapter = {
-			getRevision: async ( { revisionId } ) => {
-				return revisions.find( data => data.id == revisionId ) || {};
-			},
-			updateRevisions: async revisionsData => {
-				return revisions.splice( 0, revisions.length, ...revisionsData );
-			}
-		};
-	}
-}
+import { TrackChanges } from '@ckeditor/ckeditor5-track-changes';
+import { TextTransformation } from '@ckeditor/ckeditor5-typing';
+import { Undo } from '@ckeditor/ckeditor5-undo';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
@@ -59,8 +53,10 @@ export class RevisionHistoryAdapter extends Plugin {
 class Editor extends ClassicEditor {
 	public static override builtinPlugins = [
 		Autoformat,
+		Autosave,
 		BlockQuote,
 		Bold,
+		CKBox,
 		CloudServices,
 		Comments,
 		DocumentList,
@@ -68,7 +64,6 @@ class Editor extends ClassicEditor {
 		ExportPdf,
 		ExportWord,
 		Heading,
-		HtmlEmbed,
 		Image,
 		ImageCaption,
 		ImageStyle,
@@ -79,11 +74,22 @@ class Editor extends ClassicEditor {
 		Italic,
 		Link,
 		MediaEmbed,
+		PageBreak,
+		Pagination,
 		Paragraph,
+		PasteFromOffice,
+		PictureEditing,
+		RealTimeCollaborativeComments,
+		RealTimeCollaborativeEditing,
+		RealTimeCollaborativeRevisionHistory,
+		RealTimeCollaborativeTrackChanges,
+		RestrictedEditingMode,
 		RevisionHistory,
-		RevisionHistoryAdapter,
 		Table,
-		TableToolbar
+		TableToolbar,
+		TextTransformation,
+		TrackChanges,
+		Undo
 	];
 
 	public static override defaultConfig: EditorConfig = {
@@ -106,24 +112,30 @@ class Editor extends ClassicEditor {
 				'mediaEmbed',
 				'undo',
 				'redo',
-				'comment',
-				'commentsArchive',
+				'ckbox',
 				'exportPdf',
 				'exportWord',
 				'importWord',
+				'pageBreak',
+				'previousPage',
+				'nextPage',
+				'comment',
+				'commentsArchive',
 				'revisionHistory',
-				'htmlEmbed'
+				'trackChanges',
+				'restrictedEditing'
 			]
 		},
 		language: 'en',
 		image: {
 			toolbar: [
-				'comment',
 				'imageTextAlternative',
 				'toggleImageCaption',
 				'imageStyle:inline',
 				'imageStyle:block',
-				'imageStyle:side'
+				'imageStyle:side',
+				'comment',
+				'comment'
 			]
 		},
 		table: {
@@ -133,8 +145,19 @@ class Editor extends ClassicEditor {
 				'mergeTableCells'
 			],
 			tableToolbar: [
+				'comment',
 				'comment'
 			]
+		},
+		pagination: {
+			pageWidth: '21cm',
+			pageHeight: '29.7cm',
+			pageMargins: {
+				top: '20mm',
+				bottom: '20mm',
+				left: '12mm',
+				right: '12mm'
+			}
 		},
 		comments: {
 			editorConfig: {

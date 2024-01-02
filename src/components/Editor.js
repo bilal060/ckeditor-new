@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import { CKEditor } from '@ckeditor/ckeditor5-react'
 
 const CustomEditor = () => {
 
@@ -25,8 +25,8 @@ const CustomEditor = () => {
             viewerContainer: document.querySelector('#revision-viewer-container'),
             viewerEditorElement: document.querySelector('#revision-viewer-editor'),
             viewerSidebarContainer: document.querySelector('#revision-viewer-sidebar'),
-          },
-          
+        },
+
         licenseKey: process.env.REACT_APP_EDITOR_LICENSE,
     };
 
@@ -34,22 +34,23 @@ const CustomEditor = () => {
         <div className="container">
             <h2>React CKEditor</h2>
             <CKEditor
-                editor={ClassicEditor}
+                editor={Editor}
                 config={editorConfiguration}
                 data="<p>Hello from CKEditor&nbsp;5!</p>"
                 onReady={editor => {
                     console.log('Editor is ready to use!', editor);
-                    
+
                     const editableElement = editor.ui.getEditableElement();
                     const parentElement = editableElement && editableElement.parentElement;
-                
+                    console.log({ parentElement });
                     if (parentElement) {
                         parentElement.insertBefore(editor.ui.view.toolbar.element, editableElement);
                     }
-                
+
                     setOurEditor(editor);
                 }}
                 onError={(error, { willEditorRestart }) => {
+                    console.log("Editor error", error);
                     if (willEditorRestart) {
                         ourEditor.ui.view.toolbar.element.remove();
                     }
@@ -59,6 +60,10 @@ const CustomEditor = () => {
                     console.log({ event, editor, data });
                 }}
             />
+            <div id='editor-container'><p>Editor container</p></div>
+            <div id='revision-viewer-container'></div>
+            <div id='revision-viewer-editor'></div>
+            <div id='revision-viewer-sidebar'></div>
         </div>
     )
 }
