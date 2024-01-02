@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 const CustomEditor = () => {
 
-    console.log(process.env.REACT_APP_EDITOR_UPLOAD_URL, "configggggggggggggggggggggg");
+    const [ourEditor, setOurEditor] = useState(null);
 
     const editorConfiguration = {
         collaboration: {
@@ -45,11 +45,11 @@ const CustomEditor = () => {
                         editor.ui.getEditableElement()
                     );
 
-                    this.editor = editor;
+                    setOurEditor(editor);
                 }}
                 onError={(error, { willEditorRestart }) => {
                     if (willEditorRestart) {
-                        this.editor.ui.view.toolbar.element.remove();
+                        ourEditor.ui.view.toolbar.element.remove();
                     }
                 }}
                 onChange={(event, editor) => {
