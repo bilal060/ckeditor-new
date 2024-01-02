@@ -38,16 +38,20 @@ const CustomEditor = () => {
                 editor={ClassicEditor}
                 config={editorConfiguration}
                 data="<p>Hello from CKEditor&nbsp;5!</p>"
-                onReady={
-                    ClassicEditor
-                        .create(document.querySelector('#editor'))
-                        .then(editor => {
-                            console.log('Editor was initialized', editor);
-                        })
-                        .catch(err => {
-                            console.error(err.stack);
-                        })
-                }
+                onReady={editor => {
+                    console.log('Editor is ready to use!', editor);
+                    editor.ui.getEditableElement().parentElement.insertBefore(
+                        editor.ui.view.toolbar.element,
+                        editor.ui.getEditableElement()
+                    );
+
+                    this.editor = editor;
+                }}
+                onError={(error, { willEditorRestart }) => {
+                    if (willEditorRestart) {
+                        this.editor.ui.view.toolbar.element.remove();
+                    }
+                }}
                 onChange={(event, editor) => {
                     const data = editor.getData();
                     console.log({ event, editor, data });
