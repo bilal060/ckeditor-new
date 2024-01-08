@@ -50,9 +50,24 @@ const CustomEditor = () => {
         },
         exportPdf: {
             tokenUrl: process.env.REACT_APP_EDITOR_TOKEN_URL,
+            converterOptions: {
+                format: 'A4',
+                margin_top: '20mm',
+                margin_bottom: '20mm',
+                margin_right: '12mm',
+                margin_left: '12mm',
+                page_orientation: 'portrait'
+            }
         },
         exportWord: {
             tokenUrl: process.env.REACT_APP_EDITOR_TOKEN_URL,
+            converterOptions: {
+                format: 'A4',
+                margin_top: '20mm',
+                margin_bottom: '20mm',
+                margin_right: '12mm',
+                margin_left: '12mm'
+            }
         },
         autosave: {
             save(editor) {
@@ -108,6 +123,12 @@ const CustomEditor = () => {
                 data="<p>Hello from CKEditor&nbsp;5!</p>"
                 onReady={editor => {
                     console.log('Editor is ready to use!', editor);
+                    if (searchParams.get('readOnly')) {
+                        editor.enableReadOnlyMode('my-feature-id');
+                    }
+                    else {
+                        editor.disableReadOnlyMode('my-feature-id');
+                    }
                 }}
                 onChange={(event) => {
                     console.log(event);
