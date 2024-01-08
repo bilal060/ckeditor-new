@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import { useSearchParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import '../assets/css/style.css';
 const CustomEditor = () => {
 
     let [searchParams, setSearchParams] = useSearchParams();
-
+    const [revisionHistoryConfig, setRevisionHistoryConfig] = useState({});
     const saveData = data => {
         const doc_id = +searchParams.get('doc_id');
         const doc_type = searchParams.get('doc_type');
@@ -43,6 +43,21 @@ const CustomEditor = () => {
     //     const doc_id = searchParams.get('doc_id')
     //     axios.get(`https://versionreview.com/tothiq-api/get-document/${doc_id}`)
     // }, [searchParams]);
+
+    useEffect(() => {
+        const editorContainer = document.querySelector('#editor-container');
+        const viewerContainer = document.querySelector('#revision-viewer-container');
+        const viewerEditorElement = document.querySelector('#revision-viewer-editor');
+        const viewerSidebarContainer = document.querySelector('#revision-viewer-sidebar');
+        setRevisionHistoryConfig
+            ({
+                editorContainer,
+                viewerContainer,
+                viewerEditorElement,
+                viewerSidebarContainer
+            });
+    }, []);
+
 
     const editorConfiguration = {
         language: {
@@ -105,12 +120,7 @@ const CustomEditor = () => {
                 right: '12mm'
             }
         },
-        revisionHistory: {
-            editorContainer: document.querySelector('#editor-container'),
-            viewerContainer: document.querySelector('#revision-viewer-container'),
-            viewerEditorElement: document.querySelector('#revision-viewer-editor'),
-            viewerSidebarContainer: document.querySelector('#revision-viewer-sidebar')
-        },
+        revisionHistory: revisionHistoryConfig,
         trackChanges: {
             disableComments: true,
             trackFormatChanges: 'never',
