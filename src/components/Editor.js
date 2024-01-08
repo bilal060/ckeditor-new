@@ -10,6 +10,7 @@ const CustomEditor = () => {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [revisionHistoryConfig, setRevisionHistoryConfig] = useState({});
+    const [isReady, setIsReady] = useState(false);
     const saveData = data => {
         const doc_id = +searchParams.get('doc_id');
         const doc_type = searchParams.get('doc_type');
@@ -49,14 +50,14 @@ const CustomEditor = () => {
         const viewerContainer = document.querySelector('#revision-viewer-container');
         const viewerEditorElement = document.querySelector('#revision-viewer-editor');
         const viewerSidebarContainer = document.querySelector('#revision-viewer-sidebar');
-        setRevisionHistoryConfig
-            ({
-                editorContainer,
-                viewerContainer,
-                viewerEditorElement,
-                viewerSidebarContainer
-            });
-    }, []);
+            setRevisionHistoryConfig
+                ({
+                    editorContainer,
+                    viewerContainer,
+                    viewerEditorElement,
+                    viewerSidebarContainer
+                });
+    }, [isReady]);
 
 
     const editorConfiguration = {
@@ -146,6 +147,7 @@ const CustomEditor = () => {
                 }}
                 data="<p>Hello from CKEditor&nbsp;5!</p>"
                 onReady={editor => {
+                    setIsReady(true);
                     console.log('Editor is ready to use!', editor);
                     if (searchParams.get('readOnly')) {
                         editor.enableReadOnlyMode('my-feature-id');
