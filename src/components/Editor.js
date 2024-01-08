@@ -4,6 +4,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import { useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import '../../node_modules/ckeditor5-custom-build/build/translations/ar';
+import '../assets/css/style.css';
 
 const CustomEditor = () => {
 
@@ -75,7 +76,7 @@ const CustomEditor = () => {
             }
         },
         collaboration: {
-            channelId: process.env.REACT_APP_EDITOR_CHANNEL_ID
+            channelId: searchParams.get('channel') || 'document-id-10'
         },
         sidebar: {
             container: document.querySelector('#sidebar')
@@ -93,6 +94,16 @@ const CustomEditor = () => {
         wproofreader: {
             serviceId: process.env.REACT_APP_EDITOR_SERVICE_ID,
             srcUrl: 'https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js'
+        },
+        pagination: {
+            pageWidth: '21cm',
+            pageHeight: '29.7cm',
+            pageMargins: {
+                top: '20mm',
+                bottom: '20mm',
+                left: '12mm',
+                right: '12mm'
+            }
         },
         revisionHistory: {
             editorContainer: document.querySelector('#editor-container'),

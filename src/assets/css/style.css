@@ -1,0 +1,25 @@
+#revision-viewer-container .ck.ck-editor {
+  width: 860px;
+}
+
+#revision-viewer-container .ck.ck-content {
+  min-height: 400px;
+}
+
+#revision-viewer-container .sidebar {
+  border: 1px #c4c4c4 solid;
+
+  margin-left: -1px;
+
+  width: 320px;
+}
+
+#revision-viewer-container .ck.ck-revision-history-sidebar__header {
+  height: 39px;
+
+  background: #fafafa;
+}
+
+.hidden {
+  display: none !important;
+}
