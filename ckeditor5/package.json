@@ -15,6 +15,7 @@
     "@ckeditor/ckeditor5-block-quote": "40.2.0",
     "@ckeditor/ckeditor5-cloud-services": "40.2.0",
     "@ckeditor/ckeditor5-comments": "40.2.0",
+    "@ckeditor/ckeditor5-document-outline": "40.2.0",
     "@ckeditor/ckeditor5-easy-image": "40.2.0",
     "@ckeditor/ckeditor5-editor-classic": "40.2.0",
     "@ckeditor/ckeditor5-essentials": "40.2.0",
@@ -39,12 +40,14 @@
     "@ckeditor/ckeditor5-remove-format": "40.2.0",
     "@ckeditor/ckeditor5-restricted-editing": "40.2.0",
     "@ckeditor/ckeditor5-revision-history": "40.2.0",
+    "@ckeditor/ckeditor5-select-all": "40.2.0",
     "@ckeditor/ckeditor5-special-characters": "40.2.0",
     "@ckeditor/ckeditor5-table": "40.2.0",
     "@ckeditor/ckeditor5-track-changes": "40.2.0",
     "@ckeditor/ckeditor5-typing": "40.2.0",
     "@ckeditor/ckeditor5-undo": "40.2.0",
-    "@ckeditor/ckeditor5-word-count": "40.2.0"
+    "@ckeditor/ckeditor5-word-count": "40.2.0",
+    "@webspellchecker/wproofreader-ckeditor5": "2.3.1"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-core": "^40.2.0",

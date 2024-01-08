@@ -8,17 +8,12 @@ import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
 import { Alignment } from '@ckeditor/ckeditor5-alignment';
 import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
 import { Autosave } from '@ckeditor/ckeditor5-autosave';
-import {
-	Bold,
-	Italic,
-	Strikethrough,
-	Subscript,
-	Underline
-} from '@ckeditor/ckeditor5-basic-styles';
+import { Bold, Italic, Strikethrough, Underline } from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
 import { CloudServices } from '@ckeditor/ckeditor5-cloud-services';
 import { Comments } from '@ckeditor/ckeditor5-comments';
 import type { EditorConfig } from '@ckeditor/ckeditor5-core';
+import { TableOfContents } from '@ckeditor/ckeditor5-document-outline';
 import { EasyImage } from '@ckeditor/ckeditor5-easy-image';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
 import { ExportPdf } from '@ckeditor/ckeditor5-export-pdf';
@@ -28,7 +23,13 @@ import { FormatPainter } from '@ckeditor/ckeditor5-format-painter';
 import { Heading } from '@ckeditor/ckeditor5-heading';
 import { Highlight } from '@ckeditor/ckeditor5-highlight';
 import { HorizontalLine } from '@ckeditor/ckeditor5-horizontal-line';
-import { Image, ImageUpload } from '@ckeditor/ckeditor5-image';
+import {
+	Image,
+	ImageCaption,
+	ImageStyle,
+	ImageToolbar,
+	ImageUpload
+} from '@ckeditor/ckeditor5-image';
 import { ImportWord } from '@ckeditor/ckeditor5-import-word';
 import { Indent } from '@ckeditor/ckeditor5-indent';
 import { Link } from '@ckeditor/ckeditor5-link';
@@ -47,6 +48,7 @@ import {
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { StandardEditingMode } from '@ckeditor/ckeditor5-restricted-editing';
 import { RevisionHistory } from '@ckeditor/ckeditor5-revision-history';
+import { SelectAll } from '@ckeditor/ckeditor5-select-all';
 import {
 	SpecialCharacters,
 	SpecialCharactersArrows,
@@ -61,6 +63,7 @@ import { TrackChanges } from '@ckeditor/ckeditor5-track-changes';
 import { TextTransformation } from '@ckeditor/ckeditor5-typing';
 import { Undo } from '@ckeditor/ckeditor5-undo';
 import { WordCount } from '@ckeditor/ckeditor5-word-count';
+import WProofreader from '@webspellchecker/wproofreader-ckeditor5/src/wproofreader.js';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
@@ -88,6 +91,9 @@ class Editor extends ClassicEditor {
 		Highlight,
 		HorizontalLine,
 		Image,
+		ImageCaption,
+		ImageStyle,
+		ImageToolbar,
 		ImageUpload,
 		ImportWord,
 		Indent,
@@ -104,6 +110,7 @@ class Editor extends ClassicEditor {
 		RealTimeCollaborativeTrackChanges,
 		RemoveFormat,
 		RevisionHistory,
+		SelectAll,
 		SpecialCharacters,
 		SpecialCharactersArrows,
 		SpecialCharactersCurrency,
@@ -113,13 +120,14 @@ class Editor extends ClassicEditor {
 		SpecialCharactersText,
 		StandardEditingMode,
 		Strikethrough,
-		Subscript,
 		Table,
+		TableOfContents,
 		TableToolbar,
 		TextTransformation,
 		TrackChanges,
 		Underline,
 		Undo,
+		WProofreader,
 		WordCount
 	];
 
@@ -130,25 +138,29 @@ class Editor extends ClassicEditor {
 				'|',
 				'bold',
 				'italic',
-				'underline',
 				'strikethrough',
+				'underline',
 				'link',
 				'bulletedList',
 				'numberedList',
 				'|',
+				'outdent',
+				'indent',
+				'|',
 				'imageUpload',
 				'blockQuote',
 				'insertTable',
+				'mediaEmbed',
 				'undo',
 				'redo',
-				'fontBackgroundColor',
+				'alignment',
 				'fontColor',
 				'fontFamily',
 				'fontSize',
 				'formatPainter',
 				'highlight',
+				'fontBackgroundColor',
 				'horizontalLine',
-				'alignment',
 				'exportPdf',
 				'exportWord',
 				'importWord',
@@ -161,12 +173,25 @@ class Editor extends ClassicEditor {
 				'revisionHistory',
 				'trackChanges',
 				'removeFormat',
+				'selectAll',
 				'specialCharacters',
 				'restrictedEditingException',
-				'subscript'
+				'tableOfContents',
+				'wproofreader'
 			]
 		},
 		language: 'en',
+		image: {
+			toolbar: [
+				'imageTextAlternative',
+				'toggleImageCaption',
+				'imageStyle:inline',
+				'imageStyle:block',
+				'imageStyle:side',
+				'comment',
+				'comment'
+			]
+		},
 		table: {
 			contentToolbar: [
 				'tableColumn',

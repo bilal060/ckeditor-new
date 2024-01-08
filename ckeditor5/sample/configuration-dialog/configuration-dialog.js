@@ -20,6 +20,11 @@
 		<label for="license-key">CKEditor5 License Key</label>
 		<input id="license-key">
 	</div>
+	<h2>Connect WProofreader</h2>
+	<div>
+		<label for="wproofreader-service-id">WProofreader serviceId</label>
+		<input id="wproofreader-service-id">
+	</div>
 	<h2>Connect CKEditor Cloud Services</h2>
 	<p>If you do not have Cloud Services URLs yet, <a href="https://ckeditor.com/docs/cs/latest/guides/collaboration/quick-start.html" target="_blank">see the documentation</a>.</p>
 	<div>
@@ -51,6 +56,9 @@
 
 		const licenseKeyInput = document.getElementById( 'license-key' );
 		licenseKeyInput.value = config.licenseKey || '';
+
+		const wproofreaderServiceIdInput = document.getElementById( 'wproofreader-service-id' );
+		wproofreaderServiceIdInput.value = config.wproofreaderServiceId || '';
 
 		const uploadUrlInput = document.getElementById( 'upload-url' );
 		const webSocketUrlInput = document.getElementById( 'web-socket-url' );
@@ -102,6 +110,8 @@
 				event.preventDefault();
 
 				config.licenseKey = licenseKeyInput.value;
+
+				config.wproofreaderServiceId = wproofreaderServiceIdInput.value;
 
 				// Detect if the token contains user data.
 				if ( isCloudServicesTokenEndpoint( tokenUrlInput.value ) && !tokenUrlInput.value.includes( '?' ) ) {

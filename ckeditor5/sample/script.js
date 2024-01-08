@@ -77,6 +77,10 @@ createDialog().then( config => {
 				viewerEditorElement: document.querySelector( '.revision-viewer-editor' ),
 				viewerSidebarContainer: document.querySelector( '.revision-viewer-sidebar' )
 			},
+			wproofreader: {
+				serviceId: config.wproofreaderServiceId,
+				srcUrl: 'https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js'
+			},
 			sidebar: {
 				container: document.querySelector( '.sidebar' )
 			}
@@ -130,7 +134,7 @@ function handleSampleError( error ) {
 
 	const message = [
 		'Oops, something went wrong!',
-		`Please, report the following error on ${ issueUrl } with the build id "g7juk1pg933e-fo3ivh1nhi1e" and the error stack trace:`
+		`Please, report the following error on ${ issueUrl } with the build id "mhl4dmbrc46f-ts7x9rvx6j7" and the error stack trace:`
 	].join( '\n' );
 
 	console.error( message );

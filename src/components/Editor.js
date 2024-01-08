@@ -16,8 +16,8 @@ const CustomEditor = () => {
         console.log({ doc_id, doc_type, lang });
         console.log("Autosave", data);
         const apiData = {
-            id: doc_id,
-            document_type: doc_type,
+            id: doc_id || 1,
+            document_type: doc_type || 'contract',
             content: data
         };
         // axios.post('http://ms-kuwait.com/tothiq-api/save-document', apiData, {
@@ -34,9 +34,9 @@ const CustomEditor = () => {
         //     })
     };
 
-    useEffect(() => {
-        setSearchParams({ doc_id: '1', doc_type: 'contract', lang: 'en' });
-    }, []);
+    // useEffect(() => {
+    //     setSearchParams({ doc_id: '1', doc_type: 'contract' });
+    // }, []);
 
     // useEffect(() => {
     //     const doc_id = searchParams.get('doc_id')
@@ -66,12 +66,18 @@ const CustomEditor = () => {
             container: document.querySelector('#sidebar')
         },
         presenceList: {
-            container: document.querySelector('#presence-list-container')
+            container: document.querySelector('#presence-list-container'),
+            collapseAt: 3,
+            onClick: (user, element) => console.log(user, element)
         },
         wordCount: {
             onUpdate: stats => {
                 console.log(`Characters: ${stats.characters}\nWords: ${stats.words}`);
             }
+        },
+        wproofreader: {
+            serviceId: process.env.REACT_APP_EDITOR_SERVICE_ID,
+            srcUrl: 'https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js'
         },
         revisionHistory: {
             editorContainer: document.querySelector('#editor-container'),
