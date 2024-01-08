@@ -140,7 +140,10 @@ const CustomEditor = () => {
             <h2>React CKEditor</h2>
             <CKEditor
                 editor={Editor}
-                config={editorConfiguration}
+                config={{
+                    ...editorConfiguration,
+                    revisionHistory: revisionHistoryConfig,
+                }}
                 data="<p>Hello from CKEditor&nbsp;5!</p>"
                 onReady={editor => {
                     console.log('Editor is ready to use!', editor);
