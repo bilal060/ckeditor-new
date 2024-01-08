@@ -77,9 +77,6 @@ createDialog().then( config => {
 				viewerEditorElement: document.querySelector( '.revision-viewer-editor' ),
 				viewerSidebarContainer: document.querySelector( '.revision-viewer-sidebar' )
 			},
-			ckbox: {
-				tokenUrl: config.ckboxTokenUrl
-			},
 			sidebar: {
 				container: document.querySelector( '.sidebar' )
 			}
@@ -133,7 +130,7 @@ function handleSampleError( error ) {
 
 	const message = [
 		'Oops, something went wrong!',
-		`Please, report the following error on ${ issueUrl } with the build id "frxg9ni2fvfl-au8iaf3ltgnh" and the error stack trace:`
+		`Please, report the following error on ${ issueUrl } with the build id "g7juk1pg933e-fo3ivh1nhi1e" and the error stack trace:`
 	].join( '\n' );
 
 	console.error( message );

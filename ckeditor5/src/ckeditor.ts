@@ -5,26 +5,30 @@
 
 import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
 
+import { Alignment } from '@ckeditor/ckeditor5-alignment';
 import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
 import { Autosave } from '@ckeditor/ckeditor5-autosave';
-import { Bold, Italic } from '@ckeditor/ckeditor5-basic-styles';
+import {
+	Bold,
+	Italic,
+	Strikethrough,
+	Subscript,
+	Underline
+} from '@ckeditor/ckeditor5-basic-styles';
 import { BlockQuote } from '@ckeditor/ckeditor5-block-quote';
-import { CKBox } from '@ckeditor/ckeditor5-ckbox';
 import { CloudServices } from '@ckeditor/ckeditor5-cloud-services';
 import { Comments } from '@ckeditor/ckeditor5-comments';
 import type { EditorConfig } from '@ckeditor/ckeditor5-core';
+import { EasyImage } from '@ckeditor/ckeditor5-easy-image';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
 import { ExportPdf } from '@ckeditor/ckeditor5-export-pdf';
 import { ExportWord } from '@ckeditor/ckeditor5-export-word';
+import { FontBackgroundColor, FontColor, FontFamily, FontSize } from '@ckeditor/ckeditor5-font';
+import { FormatPainter } from '@ckeditor/ckeditor5-format-painter';
 import { Heading } from '@ckeditor/ckeditor5-heading';
-import {
-	Image,
-	ImageCaption,
-	ImageStyle,
-	ImageToolbar,
-	ImageUpload,
-	PictureEditing
-} from '@ckeditor/ckeditor5-image';
+import { Highlight } from '@ckeditor/ckeditor5-highlight';
+import { HorizontalLine } from '@ckeditor/ckeditor5-horizontal-line';
+import { Image, ImageUpload } from '@ckeditor/ckeditor5-image';
 import { ImportWord } from '@ckeditor/ckeditor5-import-word';
 import { Indent } from '@ckeditor/ckeditor5-indent';
 import { Link } from '@ckeditor/ckeditor5-link';
@@ -40,34 +44,50 @@ import {
 	RealTimeCollaborativeRevisionHistory,
 	RealTimeCollaborativeTrackChanges
 } from '@ckeditor/ckeditor5-real-time-collaboration';
-import { RestrictedEditingMode } from '@ckeditor/ckeditor5-restricted-editing';
+import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
+import { StandardEditingMode } from '@ckeditor/ckeditor5-restricted-editing';
 import { RevisionHistory } from '@ckeditor/ckeditor5-revision-history';
+import {
+	SpecialCharacters,
+	SpecialCharactersArrows,
+	SpecialCharactersCurrency,
+	SpecialCharactersEssentials,
+	SpecialCharactersLatin,
+	SpecialCharactersMathematical,
+	SpecialCharactersText
+} from '@ckeditor/ckeditor5-special-characters';
 import { Table, TableToolbar } from '@ckeditor/ckeditor5-table';
 import { TrackChanges } from '@ckeditor/ckeditor5-track-changes';
 import { TextTransformation } from '@ckeditor/ckeditor5-typing';
 import { Undo } from '@ckeditor/ckeditor5-undo';
+import { WordCount } from '@ckeditor/ckeditor5-word-count';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
 
 class Editor extends ClassicEditor {
 	public static override builtinPlugins = [
+		Alignment,
 		Autoformat,
 		Autosave,
 		BlockQuote,
 		Bold,
-		CKBox,
 		CloudServices,
 		Comments,
 		DocumentList,
+		EasyImage,
 		Essentials,
 		ExportPdf,
 		ExportWord,
+		FontBackgroundColor,
+		FontColor,
+		FontFamily,
+		FontSize,
+		FormatPainter,
 		Heading,
+		Highlight,
+		HorizontalLine,
 		Image,
-		ImageCaption,
-		ImageStyle,
-		ImageToolbar,
 		ImageUpload,
 		ImportWord,
 		Indent,
@@ -78,18 +98,29 @@ class Editor extends ClassicEditor {
 		Pagination,
 		Paragraph,
 		PasteFromOffice,
-		PictureEditing,
 		RealTimeCollaborativeComments,
 		RealTimeCollaborativeEditing,
 		RealTimeCollaborativeRevisionHistory,
 		RealTimeCollaborativeTrackChanges,
-		RestrictedEditingMode,
+		RemoveFormat,
 		RevisionHistory,
+		SpecialCharacters,
+		SpecialCharactersArrows,
+		SpecialCharactersCurrency,
+		SpecialCharactersEssentials,
+		SpecialCharactersLatin,
+		SpecialCharactersMathematical,
+		SpecialCharactersText,
+		StandardEditingMode,
+		Strikethrough,
+		Subscript,
 		Table,
 		TableToolbar,
 		TextTransformation,
 		TrackChanges,
-		Undo
+		Underline,
+		Undo,
+		WordCount
 	];
 
 	public static override defaultConfig: EditorConfig = {
@@ -99,45 +130,43 @@ class Editor extends ClassicEditor {
 				'|',
 				'bold',
 				'italic',
+				'underline',
+				'strikethrough',
 				'link',
 				'bulletedList',
 				'numberedList',
 				'|',
-				'outdent',
-				'indent',
-				'|',
 				'imageUpload',
 				'blockQuote',
 				'insertTable',
-				'mediaEmbed',
 				'undo',
 				'redo',
-				'ckbox',
+				'fontBackgroundColor',
+				'fontColor',
+				'fontFamily',
+				'fontSize',
+				'formatPainter',
+				'highlight',
+				'horizontalLine',
+				'alignment',
 				'exportPdf',
 				'exportWord',
 				'importWord',
 				'pageBreak',
 				'previousPage',
 				'nextPage',
+				'pageNavigation',
 				'comment',
 				'commentsArchive',
 				'revisionHistory',
 				'trackChanges',
-				'restrictedEditing'
+				'removeFormat',
+				'specialCharacters',
+				'restrictedEditingException',
+				'subscript'
 			]
 		},
 		language: 'en',
-		image: {
-			toolbar: [
-				'imageTextAlternative',
-				'toggleImageCaption',
-				'imageStyle:inline',
-				'imageStyle:block',
-				'imageStyle:side',
-				'comment',
-				'comment'
-			]
-		},
 		table: {
 			contentToolbar: [
 				'tableColumn',

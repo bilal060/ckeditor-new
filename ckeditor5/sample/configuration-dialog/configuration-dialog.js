@@ -20,11 +20,6 @@
 		<label for="license-key">CKEditor5 License Key</label>
 		<input id="license-key">
 	</div>
-	<h2>Connect CKBox</h2>
-	<div>
-		<label for="ckbox-token-url">CKBox token URL</label>
-		<input id="ckbox-token-url">
-	</div>
 	<h2>Connect CKEditor Cloud Services</h2>
 	<p>If you do not have Cloud Services URLs yet, <a href="https://ckeditor.com/docs/cs/latest/guides/collaboration/quick-start.html" target="_blank">see the documentation</a>.</p>
 	<div>
@@ -56,9 +51,6 @@
 
 		const licenseKeyInput = document.getElementById( 'license-key' );
 		licenseKeyInput.value = config.licenseKey || '';
-
-		const ckboxTokenUrlInput = document.getElementById( 'ckbox-token-url' );
-		ckboxTokenUrlInput.value = config.ckboxTokenUrl || '';
 
 		const uploadUrlInput = document.getElementById( 'upload-url' );
 		const webSocketUrlInput = document.getElementById( 'web-socket-url' );
@@ -110,8 +102,6 @@
 				event.preventDefault();
 
 				config.licenseKey = licenseKeyInput.value;
-
-				config.ckboxTokenUrl = ckboxTokenUrlInput.value;
 
 				// Detect if the token contains user data.
 				if ( isCloudServicesTokenEndpoint( tokenUrlInput.value ) && !tokenUrlInput.value.includes( '?' ) ) {
